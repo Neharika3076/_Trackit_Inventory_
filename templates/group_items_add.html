@@ -1,0 +1,36 @@
+
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container d-flex justify-content-center mt-5">
+    <div class="col-md-6">
+        <div class="card p-4 shadow-sm">
+            <h4 class="mb-4">New Item Group</h4>
+
+            <form method="POST" action="{{ url_for('group_item_add') }}" enctype="multipart/form-data">
+                <!-- Item Group Details -->
+                <div class="form-group">
+                    <label for="groupName">Item Group Name:</label>
+                    <input type="text" class="form-control" id="category_name" name="category_name" placeholder="Enter item group name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="description">Description:</label>
+                    <textarea class="form-control" id="category_remarks" name="category_remarks" rows="3" placeholder="Provide a brief description"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="unit">Unit:</label>
+                    <input type="text" class="form-control" id="category_units" name="category_units" placeholder="e.g., kg, pcs, liter">
+                </div>
+
+               
+
+                <!-- Submit Button -->
+                <button type="submit" class="btn btn-primary btn-block mt-3">Save</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

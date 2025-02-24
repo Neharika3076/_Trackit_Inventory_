@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TrackIt Sign-in Page</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        body {
+            background-color: #f8f9fa; 
+        }
+        .signin-container {
+            background-color: #ffffff; /* White form background */
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); /* Soft shadow */
+            overflow: hidden; /* For rounded corners on background */
+        }
+        .signin-form {
+            padding: 40px;
+        }
+        .signin-image-section {
+            background-color: #f0f0f0; /* Light grey image section background */
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .zoho-logo {
+            width: 80px; /* Adjust logo size as needed */
+            margin-bottom: 20px;
+        }
+        .form-title {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #343a40; /* Dark grey title */
+            margin-bottom: 10px;
+        }
+        .form-subtitle {
+            color: #6c757d; /* Grey subtitle */
+            margin-bottom: 30px;
+        }
+        .form-control {
+            border-radius: 5px;
+        }
+        .btn-primary {
+            background-color: #007bff; /* Zoho blue primary button color */
+            border-color: #007bff;
+            border-radius: 5px;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3; /* Darker blue on hover */
+            border-color: #0056b3;
+        }
+        .smart-signin-btn {
+            background-color: #e0e0e0; /* Light grey button */
+            color: #343a40; /* Dark grey text */
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            margin-top: 20px;
+            display: inline-flex; /* For icon and text alignment */
+            align-items: center;
+            justify-content: center;
+            gap: 10px; /* Spacing between icon and text */
+            text-decoration: none; /* Remove underline from link */
+        }
+        .smart-signin-btn:hover {
+            background-color: #d0d0d0; /* Slightly darker grey on hover */
+            color: #343a40;
+        }
+        .social-login-icons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .social-icon-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #fff; /* White icon background */
+            border: 1px solid #ced4da; /* Light grey border */
+            color: #495057; /* Grey icon color */
+            text-decoration: none;
+            font-size: 1.2rem;
+        }
+        .social-icon-link:hover {
+            background-color: #f0f0f0; /* Lighter grey on hover */
+        }
+        .signup-link {
+            margin-top: 20px;
+            text-align: center;
+        }
+        .signup-link a {
+            color: #007bff; /* Zoho blue link color */
+            text-decoration: none;
+        }
+        .signup-link a:hover {
+            text-decoration: underline;
+        }
+        .mfa-section {
+            text-align: left;
+            margin-top: 30px;
+        }
+        .mfa-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .mfa-text {
+            color: #495057; /* Grey text */
+            line-height: 1.5;
+        }
+        .mfa-learn-more-link {
+            color: #007bff; /* Zoho blue link color */
+            text-decoration: none;
+            display: inline-block; /* For margin control */
+            margin-top: 10px;
+        }
+        .mfa-learn-more-link:hover {
+            text-decoration: underline;
+        }
+        .copyright-text {
+            text-align: center;
+            color: #6c757d; /* Grey copyright text */
+            margin-top: 30px;
+            font-size: 0.9rem;
+        }
+        .image-placeholder {
+            width: 100%;
+            max-width: 300px; /* Adjust image max width as needed */
+            height: auto; /* Maintain aspect ratio */
+            margin-bottom: 20px;
+             /* Replace with your actual image or Zoho image */
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 col-md-10">
+                <div class="signin-container">
+                    <div class="row">
+                        <div class="col-md-6 signin-form">
+                            <img class="h-25" src="/static/images/mainLogo.jpeg" alt="Zoho Logo" class="zoho-logo">
+                            <h2 class="form-title">Sign in</h2>
+                            <p class="form-subtitle">to access TrackIt  Home</p>
+                            <form method="POST">
+                                <div class="mb-3">
+                                    <label for="email" style="font-size: large;font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">Email:</label>
+                                    <input type="email" id="email" class="form-control" name="email" placeholder="name@xyz">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="email" style="font-size: large;font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">Password:</label>
+                                    <input type="password" id="email" class="form-control" name="password" placeholder="password">
+                                </div>
+                             
+                                <div class="d-grid">
+                                    <button type="submit" class="btn btn-primary">Next</button>
+                                </div>
+                               
+
+                                <div class="signup-link">
+                                    <p>Don't have a TrackIt Inventory account? <a href="{{ url_for('register' ) }}">Sign up now</a></p>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col-md-6 signin-image-section ">
+                            <img class="h-100 w-100" src="../static/images/loginwaliimage.jpg"  alt="MFA Illustration" class="image-placeholder">
+                            
+                        </div>
+                    </div>
+                </div>
+                <p class="copyright-text mt-4">© 2025, TrackIt Corporation Pvt. Ltd. All Rights Reserved.</p>
+            </div>
+        </div>
+    </div>
+    
+    <div style="position: absolute; top: 0;left: 50%;background-color: yellow;">
+        {% for messages in get_flashed_messages() %}
+    
+        <div class="alert alert-{{category}} alert-dismissible fade show"
+        role="alert">
+        {{messages}}
+        <button type="button" class="btn-close"
+        data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {% endfor %}
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

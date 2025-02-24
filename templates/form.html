@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container form-container">
+    <h1 class="mb-4">{% if user %}Edit Customer{% else %}New Customer{% endif %}</h1>
+    <p><a href="#">Fetch Customer Details From GSTN</a></p>
+
+    <form id="customerForm" action="/formSubmit" method="post">
+        <!-- Hidden input for roll_no (used for editing existing users) -->
+        <input type="hidden" name="roll_no" value="{{ user.roll_no if user else '' }}">
+
+        <div class="mb-3">
+            <label class="form-label">Customer Type</label>
+            <div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="customerType" value="Business" id="typeBusiness" 
+                    {% if user and user.customer_type == 'Business' %} checked {% endif %}>
+                    <label class="form-check-label" for="typeBusiness">Business</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="customerType" value="Individual" id="typeIndividual" 
+                    {% if user and user.customer_type == 'Individual' %} checked {% endif %}>
+                    <label class="form-check-label" for="typeIndividual">Individual</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-md-4">
+                <label for="salutation" class="form-label">Salutation</label>
+                <select id="salutation" name="salutation" class="form-select">
+                    <option value="">Choose...</option>
+                    <option {% if user and user.salutation == 'Mr.' %} selected {% endif %}>Mr.</option>
+                    <option {% if user and user.salutation == 'Ms.' %} selected {% endif %}>Ms.</option>
+                    <option {% if user and user.salutation == 'Mrs.' %} selected {% endif %}>Mrs.</option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                <label for="firstName" class="form-label">First Name</label>
+                <input type="text" class="form-control" id="firstName" name="first_name" value="{{ user.first_name if user else '' }}">
+            </div>
+            <div class="col-md-4">
+                <label for="lastName" class="form-label">Last Name</label>
+                <input type="text" class="form-control" id="lastName" name="last_name" value="{{ user.last_name if user else '' }}">
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label for="companyName" class="form-label">Company Name</label>
+            <input type="text" class="form-control" id="companyName" name="customer-company_name" value="{{ user.company_name if user else '' }}">
+        </div>
+
+        <div class="mb-3">
+            <label for="displayName" class="form-label">Display Name <span class="text-danger">*</span></label>
+            <input type="text" class="form-control" id="displayName" name="customer-name" value="{{ user.name if user else '' }}" required>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <label for="email" class="form-label">Email Address</label>
+                <input type="email" class="form-control" id="email" name="customer-email" value="{{ user.email if user else '' }}">
+            </div>
+            <div class="col-md-3">
+                <label for="workPhone" class="form-label">Work Phone</label>
+                <input type="text" class="form-control" id="workPhone" name="customer-work_phone" value="{{ user.work_phone if user else '' }}">
+            </div>
+            <div class="col-md-3">
+                <label for="mobile" class="form-label">Mobile</label>
+                <input type="text" class="form-control" id="mobile" name="mobile" value="{{ user.mobile if user else '' }}">
+            </div>
+        </div>
+
+        <ul class="nav nav-tabs tabs">
+            <li class="nav-item">
+                <a class="nav-link active" href="#otherDetails" data-bs-toggle="tab">Other Details</a>
+            </li>
+        </ul>
+
+        <div class="tab-content border p-3">
+            <div class="tab-pane fade show active" id="otherDetails">
+                <div class="mb-3">
+                    <label for="pan" class="form-label">PAN</label>
+                    <input type="text" class="form-control" id="pan" name="pan" value="{{ user.pan if user else '' }}">
+                </div>
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label for="currency" class="form-label">Currency</label>
+                        <select id="currency" name="currency" class="form-select">
+                            <option {% if user and user.currency == 'INR - Indian Rupee' %} selected {% endif %}>INR - Indian Rupee</option>
+                            <option {% if user and user.currency == 'USD - US Dollar' %} selected {% endif %}>USD - US Dollar</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="paymentTerms" class="form-label">Payment Terms</label>
+                        <select id="paymentTerms" name="payment_terms" class="form-select">
+                            <option {% if user and user.payment_terms == 'Due On Receipt' %} selected {% endif %}>Due On Receipt</option>
+                            <option {% if user and user.payment_terms == 'Net 30' %} selected {% endif %}>Net 30</option>
+                            <option {% if user and user.payment_terms == 'Net 60' %} selected {% endif %}>Net 60</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-4">
+            <button class="btn btn-primary" type="submit" id="saveButton">{% if user %}Update{% else %}Save{% endif %}</button>
+            <button type="reset" class="btn btn-secondary">Cancel</button>
+        </div>
+    </form>
+</div>
+
+{% endblock %}

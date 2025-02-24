@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="card shadow-lg">
+        <div class="card-header bg-primary text-white">
+            <h2 class="text-center">Add Purchase Receive</h2>
+        </div>
+        <div class="card-body">
+            <form method="POST">
+                <div class="mb-3">
+                    <label class="form-label">Date:</label>
+                    <input type="date" name="date" class="form-control" required>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Purchase Order:</label>
+                    <select name="purchase_order_id" class="form-select" required>
+                        {% for order in purchase_orders %}
+                        <option value="{{ order.id }}">{{ order.purchase_order_no }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Vendor:</label>
+                    <select name="vendor_id" class="form-select" required>
+                        {% for vendor in vendors %}
+                        <option value="{{ vendor.id }}">{{ vendor.vendor_display_name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Status:</label>
+                    <select name="status" class="form-select" required>
+                        <option value="In Transit">In Transit</option>
+                        <option value="Pending">Pending</option>
+                        <option value="Received">Received</option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Quantity:</label>
+                    <input type="number" name="quantity" class="form-control" required>
+                </div>
+
+                <div class="text-center">
+                    <button type="submit" class="btn btn-success">Add Purchase Receive</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2>All Purchase Receives </h2>
+        <a href="{{ url_for('add_purchase_receive') }}" class="btn btn-primary">
+            + New
+        </a>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table align-middle">
+            <thead class="text-secondary">
+                <tr>
+                    <th><input type="checkbox"></th>
+                    <th>DATE</th>
+                    <th>PURCHASE RECEIVE#</th>
+                    <th>PURCHASE ORDER#</th>
+                    <th>VENDOR NAME</th>
+                    <th>STATUS</th>
+                    <th>QUANTITY</th>
+                    <th>ACTION</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for receive in receives %}
+                <tr>
+                    <td><input type="checkbox"></td>
+                    <td>{{ receive.date.strftime('%d %b %Y') }}</td>
+                    <td>
+                        <a href="{{ url_for('edit_purchase_receive', id=receive.id) }}" class="text-primary fw-bold">
+                            PR-{{ receive.id }}
+                        </a>
+                    </td>
+                    <td>PO-{{ receive.purchase_order.purchase_order_no }}</td>
+                    <td>{{ receive.vendor.vendor_display_name }}</td>
+                    <td>
+                        {% if receive.status == "Received" %}
+                            <span class="text-success fw-bold">Received</span>
+                        {% else %}
+                            <span class="text-warning fw-bold">In Transit</span>
+                        {% endif %}
+                    </td>
+                    <td>{{ receive.quantity }}</td>
+                    <td>
+                        <form action="{{ url_for('delete_purchase_receive', id=receive.id) }}" method="POST" style="display:inline;">
+                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this purchase receive?');">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

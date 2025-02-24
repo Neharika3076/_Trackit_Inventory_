@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% block content %}
+
+    
+<main class="col-md-10 mx-auto mt-4">
+    
+    
+
+    <div class="table-container mt-4">
+        <table class="table table-hover">
+            <thead   class="table-primary">
+                <tr>
+                    <th scope="col">
+                        <input type="checkbox">
+                    </th>
+                    <th>Sales Order</th>
+                    <th>Reference</th>
+                    <th>Customer</th>
+                    <th>Status</th>
+                    <th>Amount</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order in sales_orders %}
+                <tr>
+                    <td >
+                        <input type="checkbox">
+                    </td>
+                    <td>{{ order.sales_order }}</td>
+                    <td>{{ order.reference }}</td>
+                    <td>{{ order.customer }}</td>
+                    <td>
+                        <form method="POST">
+                            <input type="hidden" name="order_id" value="{{ order.id }}">
+                            <select name="status" class="form-select" onchange="this.form.submit()">
+                                <option value="OVERDUE" {% if order.status == "OVERDUE" %}selected{% endif %}>OVERDUE</option>
+                                <option value="OPEN" {% if order.status == "OPEN" %}selected{% endif %}>OPEN</option>
+                                <option value="CLOSED" {% if order.status == "CLOSED" %}selected{% endif %}>CLOSED</option>
+                                <option value="DRAFT" {% if order.status == "DRAFT" %}selected{% endif %}>DRAFT</option>
+                            </select>
+                        </form>
+                    </td>
+                    <td>${{ order.amount }}</td>
+                    <td>
+                        <form action="{{ url_for('delete_order', order_id=order.id) }}" method="POST">
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <a href="{{ url_for('package_list') }}" class="btn btn-primary">View Packages</a>
+    </div>
+    </main>
+    {% endblock %}

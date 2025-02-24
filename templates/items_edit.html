@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+
+
+<div class="container d-flex justify-content-center mt-5">
+    <div class="col-md-6">
+        <div class="card p-4 shadow-sm">
+            <h4 class="mb-4">Modify Item</h4>
+
+            <form method="POST" action="{{ url_for('items_edit', id= item.id) }}" enctype="multipart/form-data">
+                <!-- Item Group Details -->
+                <div class="form-group">
+                    <label for="groupName">Item Name:</label>
+                    <input type="text" class="form-control" id="item_name" name="item_name" value="{{item.item_name}}" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="description">Description:</label>
+                    <textarea class="form-control" id="item_remarks" name="item_remarks" rows="3"> {{item.item_remarks}}</textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="unit">Category</label>
+                    <select name="item_category" id="item_category">
+                        <option value="0">Select Category</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="description">Colour</label>
+                    <input type="text" class="form-control" id="item_colour" name="item_colour" value="{{item.item_colour}}">
+                </div>
+
+                <div class="form-group">
+                    <label for="description">Size</label>
+                    <input type="text" class="form-control" id="item_size" name="item_size"  value="{{item.item_size}}">
+                </div>
+
+
+                <!-- Submit Button -->
+                <button type="submit" class="btn btn-primary btn-block mt-3">Update</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

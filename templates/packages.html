@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h1>All Packages</h1>
+    </div>
+
+    <div class="d-flex flex-wrap gap-4">
+        <!-- Not Shipped Column -->
+        <div class="kanban-column">
+            <div class="kanban-header not-shipped">Not Shipped</div>
+            {% for package in not_shipped_packages %}
+            <div class="kanban-card">
+                <strong>{{ package.customer }}</strong>
+                <div><a href="#">{{ package.reference }}</a> | {{ package.sales_order }}</div>
+                <div>{{ package.shipping_date or 'N/A' }}</div>
+                <div class="text-end">${{ package.amount }}</div>
+            </div>
+            {% else %}
+            <div class="text-center text-muted mt-3">No Records Found</div>
+            {% endfor %}
+        </div>
+
+        <!-- Shipped Column -->
+        <div class="kanban-column">
+            <div class="kanban-header shipped">Shipped</div>
+            {% for order in shipped_sales_orders %}
+            <div class="kanban-card">
+                <strong>{{ order.customer.name }}</strong>
+                <div><a href="#">{{ order.reference_no }}</a> | {{ order.sales_order_no }}</div>
+                <div>Carrier: Unknown | {{ order.shipment_status }}</div>
+                <div class="text-end">${{ order.total_amount }}</div>
+            </div>
+            {% else %}
+            <div class="text-center text-muted mt-3">No Records Found</div>
+            {% endfor %}
+        </div>
+
+        <!-- Delivered Column -->
+        <div class="kanban-column">
+            <div class="kanban-header delivered">Delivered</div>
+            {% for package in delivered_packages %}
+            <div class="kanban-card">
+                <strong>{{ package.customer }}</strong>
+                <div><a href="#">{{ package.reference }}</a> | {{ package.sales_order }}</div>
+                <div>Carrier: Unknown | {{ order.shipment_status }}</div>
+                <div class="text-end">${{ package.amount }}</div>
+            </div>
+            {% else %}
+            <div class="text-center text-muted mt-3">No Records Found</div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

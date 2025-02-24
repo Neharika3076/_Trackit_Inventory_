@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Customer</title>
+</head>
+<body>
+    <h2>Search for a Customer</h2>
+    <form method="POST">
+        <label for="customer_id">Enter Customer ID:</label>
+        <input type="number" id="customer_id" name="customer_id" required>
+        <button type="submit">Search</button>
+    </form>
+
+    {% if customer %}
+        <h3>Customer Details</h3>
+        <p><strong>ID:</strong> {{ customer.id }}</p>
+        <p><strong>Name:</strong> {{ customer.name }}</p>
+    {% elif customer is none and request.method == 'POST' %}
+        <p style="color: red;">Customer not found!</p>
+    {% endif %}
+</body>
+</html>

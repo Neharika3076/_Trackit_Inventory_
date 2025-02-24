@@ -1,0 +1,149 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="pt-0" style="background-image: url('/static/images/backgrounddddd.jpg'); height: 90px; background-size: cover; background-position: center;">
+    <h1 class="">Dashboard</h1>
+    </div>
+
+    <div class="row mx-2">
+        <div class="col-md-3">
+            <div class="card text-center p-3 mb-3 mb-md-0 bg-light">
+                <h1 class="text-primary " style="font-size: 30px;">51</h1>
+                <p class="text-secondary" style="font-size: 30px;">To Be Packed</p>
+            </div>
+        </div>
+        <div class="col-md-3 ">
+            <div class="card text-center p-3 mb-3 mb-md-0 bg-light">
+                <h1 class="text-danger" style="font-size: 30px;">{{ data.sales_activity.to_be_shipped }}</h1>
+                <p class="text-secondary"style="font-size: 30px;">To Be Shipped</p>
+            </div>
+        </div>
+        <div class="col-md-3 ">
+            <div class="card text-center p-3 mb-3 mb-md-0 bg-light">
+                <h1 class="text-success" style="font-size: 30px;">{{ data.sales_activity.to_be_delivered }}</h1>
+                <p class="text-secondary" style="font-size: 30px;">To Be Delivered</p>
+            </div>
+        </div>
+        <div class="col-md-3 bg-light">
+            <div class="card text-center p-3  mb-3 mb-md-0 bg-light">
+                <h1 class="text-warning" style="font-size: 30px;">{{ data.sales_activity.to_be_invoiced }}</h1>
+                <p class="text-secondary" style="font-size: 30px;">To Be Invoiced</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-4 mx-2">
+        <div class="col-md-4 ">
+            <div class="card  mb-md-0  bg-light" style="height: 220px; overflow: hidden;">
+         <h3 class="pt-3 px-2">Inventory Summary</h3>
+         <div class="bg-white w-100 h-100 px-2 pt-3"> 
+                <p class="text-secondary" style="font-size: 25px;">Quantity in Hand: <strong>{{ data.inventory_summary.quantity_in_hand }}</strong></p>
+                <p class="text-secondary" style="font-size: 25px;">Quantity to Be Received: <strong>{{ data.inventory_summary.quantity_to_receive }}</strong></p>
+            </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card bg-light text-center mb-3 mb-md-0 " style="height: 220px; overflow: hidden;"> 
+                 <h3 class="pt-2">Active Items</h3>
+                <div class="d-flex justify-content-center pt-3 bg-white">
+                    <div class="position-relative" style="width: 150px; height: 150px;">
+                        <div class="progress" style="height: 150px; width: 150px; border-radius: 50%;">
+                            <div class="progress-bar bg-teal" role="progressbar"
+                                 style="width: var(--active-percentage);"
+                                 aria-valuenow="{{ data.product_details.active_items_percentage }}"
+                                 aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                        <div class="position-absolute top-50 start-50 translate-middle text-center"style="font-size: 25px;">
+                            <span style="font-size: 23px;"style="font-size: 25px;">{{ data.product_details.active_items_percentage }}%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card bg-light" style="height: 220px; overflow: hidden;"> 
+                <h3 class="px-3 pt-2">Product Details</h3>
+                <div class="w-100 h-100 bg-white pt-3">
+                <p class="text-danger px-3" style="font-size: 18px;">Low Stock Items: <strong>{{ data.product_details.low_stock }}</strong></p>
+                <p class=" px-3 text-secondary" style="font-size: 18px;">All Item Groups: <strong>{{ data.product_details.item_groups }}</strong></p>
+                <p class=" px-3 text-secondary" style="font-size: 18px;">All Items: <strong>{{ data.product_details.all_items }}</strong></p>
+                <p class=" px-3 text-secondary" style="font-size: 18px;">Active Items: <strong>{{ data.product_details.active_items_percentage }}%</strong></p>
+            </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-4 mx-2">
+        <div class="col-md-12">
+            <div class="card p-3  bg-light"> 
+                 <h5 style="font-size: 25px;">Top Selling Items (This Month)</h5>
+                <div class="row h-100 w-100 bg-white">
+                 
+                        <div class="col-md-4 text-center mb-3">  <div class="p-3 border">
+                                <p style="font-size: 25px;">Coffee Table</p>
+                                <img src="../static/images/coffee.webp" alt="Product" style="height: 200px; width: 300px;" class="img-fluid">
+                                <p class="pt-3" style="font-size: 25px;"><strong>250 Mtr</strong></p>
+                            </div>
+                        </div>
+                        <div class="col-md-4 text-center mb-3">  <div class="p-3 border">
+                            <p style="font-size: 25px;">Sofa</p>
+                            <img src="../static/images/sofa.jpeg" alt="Product" style="height: 200px; width: 300px;" class="img-fluid">
+                            <p class="pt-3" style="font-size: 25px;"><strong>320 Mtr</strong></p>
+                        </div>
+                    </div>
+                    <div class="col-md-4 text-center mb-3">  <div class="p-3 border">
+                        <p style="font-size: 25px;">Bed</p>
+                        <img src="../static/images/bed.jpeg" alt="Product" style="height: 200px; width: 300px;" class="img-fluid">
+                        <p class="pt-3" style="font-size: 25px;"><strong>153 Mtr</strong></p>
+                    </div>
+                </div>
+                  
+                </div>
+            </div>
+        </div>
+        <div>
+            <img class="mt-4" src="/static/images/graph.png" alt="" style="width: 100%;">
+        </div>
+    </div>
+
+    <!-- <div class="row mt-4">
+        <div class="col-md-6">
+            <div class="card p-3 mb-3 mb-md-0" style="height: 240px; overflow: hidden;">  <h5>Purchase Order (This Month)</h5>
+                <p>Quantity Ordered: <strong class="text-primary">{{ data.purchase_order.quantity_ordered }}.00</strong></p>
+                <p>Total Cost: <strong class="text-primary">{{ data.purchase_order.total_cost }}</strong></p>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card p-3" style="height: 240px; overflow: hidden;">  <h5>Sales Order (This Month)</h5>
+                <p>Draft: <strong>{{ data.sales_order.draft }}</strong></p>
+                <p>Confirmed: <strong>{{ data.sales_order.confirmed }}</strong></p>
+                <p>Packed: <strong>{{ data.sales_order.packed }}</strong></p>
+                <p>Shipped: <strong>{{ data.sales_order.shipped }}</strong></p>
+                <p>Invoiced: <strong>{{ data.sales_order.invoiced }}</strong></p>
+            </div>
+        </div>
+    </div>
+</div> -->
+
+
+<style>
+    :root {
+        --active-percentage: {{ data.product_details.active_items_percentage }}%;
+    }
+
+    .card {
+        display: flex; 
+        flex-direction: column; /* Stack content vertically */
+    }
+    .card-body { /* If you have a .card-body class */
+        flex-grow: 1; /* Allow content to expand to fill available height */
+    }
+
+    .card img {
+        max-width: 100%;  /* Prevent images from exceeding card width */
+        height: auto;     /* Maintain aspect ratio */
+        object-fit: cover; /* Cover the area, may crop if necessary */
+    }
+</style>
+
+{% endblock %}

@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Items</h1>
+<a href="{{ url_for('items_add') }}" class="btn btn-primary mb-3">Add New Item</a>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Item Name</th>
+            <th>Description</th>
+            <th>Category</th>
+            <th>Colour</th>
+            <th>Size</th>
+            <th>Purchase Rate</th>  <!-- New column -->
+            <th>Sales Rate</th>     <!-- New column -->
+            <th>Quantity</th>        <!-- New column -->
+            <th>Reference Number</th> <!-- New column -->
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in items %}
+            <tr>
+                <td>{{ item.item_name }}</td>
+                <td>{{ item.item_remarks }}</td>
+                <td>{{ item.item_category }}</td>  <!-- You might want to fetch the category name instead -->
+                <td>{{ item.item_colour }}</td>
+                <td>{{ item.item_size }}</td>
+                <td>{{ item.purchase_rate }}</td>  <!-- Display purchase rate -->
+                <td>{{ item.sales_rate }}</td>     <!-- Display sales rate -->
+                <td>{{ item.quantity }}</td>       <!-- Display quantity -->
+                <td>{{ item.reference_number }}</td> <!-- Display reference number -->
+                <td>
+                    <a href="{{ url_for('items_edit', id=item.id) }}" class="btn btn-sm btn-secondary">Edit</a>
+                    <form method="POST" action="{{ url_for('items_delete', id=item.id) }}" style="display:inline;">
+                        <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

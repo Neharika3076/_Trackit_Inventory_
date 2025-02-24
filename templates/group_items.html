@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>Category</h1>
+    <a href="{{ url_for('group_item_add') }}" class="btn btn-primary mb-3">Add New Category</a>
+    <table class="table">
+        <thead>
+            <tr>
+                <th><input type="checkbox" id="select-all"></th>
+                <th>Category Name</th>
+                <th>Description</th>
+                <th>Units</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for category in group_items %}
+                <tr>
+                    <td><input type="checkbox" name="selected_category[]" value="{{ category.id }}"></td>
+                    <td>{{ category.category_name }}</td>
+                    <td>{{ category.category_remarks }}</td>
+                    <td>{{ category.unit }}</td>
+                    <td>
+                        <!-- Edit Button -->
+                        <a href="{{ url_for('category_item_edit', id=category.id) }}" class="btn btn-sm btn-secondary">
+                            <i class="bi bi-pencil"></i>
+                        </a>
+                        
+                        <!-- Delete Button (Triggers Modal) -->
+                        <a href="#" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal{{ category.id }}">
+                            <i class="bi bi-trash"></i>
+                        </a>
+        
+                        <!-- Delete Confirmation Modal -->
+                        <div class="modal fade" id="deleteModal{{ category.id }}" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="deleteModalLabel">Confirm Deletion</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        Are you sure you want to delete this category?
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                        <form method="POST" action="{{ url_for('category_item_delete', category_id=category.id) }}">
+                                            <button type="submit" class="btn btn-danger">Delete</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+        
+    </table>
+
+    <script>
+        document.getElementById('select-all').addEventListener('change', function() {
+            document.querySelectorAll('input[name="selected_vendors[]"]').forEach(checkbox => {
+                checkbox.checked = this.checked;
+            });
+        });
+    </script>
+
+
+{% endblock %}

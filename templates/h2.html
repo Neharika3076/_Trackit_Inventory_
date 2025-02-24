@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Inventory Management Software</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="shortcut icon" href="/static/images/mainLogo.ico" type="image/x-icon">
+    <style>
+      /* Custom Styles - Moved from inline <style> tag to here for better organization */
+      body {
+        overflow-x: hidden;
+        width: 100%;
+        font-family: sans-serif;
+      }
+
+      /* Navbar styles */
+      #nav-flex {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+      }
+
+      @media (max-width: 992px) {
+        #nav-flex {
+          margin-top: 15px;
+          justify-content: center;
+        }
+      }
+
+      /* Hero section */
+      .hero-section {
+        background-color: rgb(255, 238, 230);
+        padding: 40px 20px;
+      }
+
+      .hero-content {
+        text-align: center;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .hero-title {
+        font-size: clamp(2rem, 4vw, 2.8rem);
+        color: rgb(17, 31, 94);
+        margin-bottom: 20px;
+        line-height: 1.2;
+      }
+
+      .hero-description {
+        font-size: clamp(1rem, 2vw, 1.2rem);
+        margin-bottom: 30px;
+      }
+
+      .hero-image {
+        max-width: 100%;
+        height: auto;
+        margin: 40px auto;
+        display: block;
+      }
+
+      /* Integration section */
+      .integrate-section {
+        background-color: #ffeee6;
+        padding: 40px 20px;
+        text-align: center;
+      }
+
+      .integrate-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 20px;
+        max-width: 1200px;
+        margin: 40px auto;
+        padding: 0 20px;
+      }
+
+      .integrate-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .integrate-item img {
+        height: 85px;
+        width: auto;
+        margin-bottom: 10px;
+      }
+
+      /* Mobile app section */
+      .mobile-app-section {
+        background-color: rgb(197, 27, 54);
+        padding: 60px 20px;
+        color: white;
+      }
+
+      .mobile-app-content {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        gap: 30px;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .store-buttons {
+        display: flex;
+        gap: 20px;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      .store-button img {
+        height: 100px;
+        width: auto;
+      }
+
+      /* Watch demo button */
+      #demo-btn {
+        display: inline-block;
+        background-color: rgba(51, 51, 51, 0.8);
+        color: white;
+        padding: 8px 25px;
+        border-radius: 20px;
+        transition: all 0.3s ease;
+        margin: 20px auto;
+      }
+
+      #demo-btn:hover {
+        transform: scale(1.1);
+        background-color: black;
+      }
+
+      /* Responsive adjustments (Media Queries) */
+      @media (max-width: 768px) {
+        .hero-section {
+          padding: 20px 10px;
+        }
+
+        .mobile-app-content {
+          text-align: center;
+        }
+
+        .store-buttons {
+          width: 100%;
+          justify-content: center;
+        }
+      }
+
+      @media (max-width: 992px) {
+        .hero-section {
+          text-align: center;
+          padding: 40px 20px;
+        }
+
+        .hero-title {
+          font-size: 32px;
+        }
+
+        .hero-image {
+          max-width: 90%;
+          margin: 30px auto;
+        }
+
+        #nav-flex {
+          margin-top: 15px;
+          justify-content: center;
+        }
+
+        .mobile-app-section .row {
+          text-align: center;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .hero-title {
+          font-size: 28px;
+        }
+
+        .card {
+          margin: 15px auto;
+        }
+
+        .integrate-section { /* Corrected class name to integrate-section */
+          padding: 40px 0;
+        }
+
+        .integrate-item {
+          width: 45%;
+        }
+
+        .mobile-app-section {
+          padding: 50px 20px;
+        }
+
+        .store-buttons {
+          flex-direction: column;
+          align-items: center;
+          gap: 20px;
+        }
+      }
+
+      @media (max-width: 576px) {
+        .hero-title {
+          font-size: 24px;
+        }
+
+        .hero-description {
+          font-size: 16px;
+        }
+
+        .card {
+          width: 100%;
+          margin: 10px 0;
+        }
+
+        .integrate-item {
+          width: 100%;
+        }
+      }
+
+      /* Simple Pricing Cards Styles */
+      .pricing-card-title {
+        font-weight: 700;
+      }
+
+      .btn-outline-secondary.rounded-pill { /* Style for pricing card buttons */
+        color: #e53e3e;
+        border-color: #e53e3e;
+      }
+
+      /* Customer Carousel Styles */
+      #customerCarousel .carousel-item .card { /* Style for testimonial cards */
+        border: 0;
+        border-radius: 1rem;
+      }
+
+      /* "Things to Consider" Cards Styles and Animations */
+      .box {
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+        opacity: 0;
+        transform: scale(0.9);
+        transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+      }
+
+      .box.animated {
+        opacity: 1;
+        transform: scale(1);
+      }
+
+      .main-title {
+        color: #3498db;
+        animation: fadeInSlideDown 1s ease-out 0.3s forwards;
+        opacity: 0;
+        transform: translateY(-20px);
+        text-align: center; /* Center align title */
+        margin-top: 50px; /* Add top margin */
+      }
+
+      .subtitle {
+        color: #777;
+        animation: fadeInSlideDown 1s ease-out 0.6s forwards;
+        opacity: 0;
+        transform: translateY(-10px);
+        text-align: center; /* Center align subtitle */
+      }
+
+      .card-title { /* Style for card titles within "Things to Consider" */
+        color: #27844e;
+      }
+      /* .card:hover{
+        background-color: rgb(9, 238, 238);
+      } */
+      @keyframes fadeInSlideDown {
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* Shipping Carrier Images Animation Styles */
+      .slide-in-left {
+          opacity: 0;
+          transform: translateX(-100%);
+          transition: opacity 1s ease-out, transform 1s ease-out;
+      }
+
+      .slide-in-right {
+          opacity: 0;
+          transform: translateX(100%);
+          transition: opacity 1s ease-out, transform 1s ease-out;
+      }
+
+      .slide-in-left.animated,
+      .slide-in-right.animated {
+          opacity: 0.7;
+          transform: translateX(0);
+      }
+
+      .footer-card:hover{
+        transform: scale(1.1);
+      }
+      /* Footer Styles */
+      footer {
+        background-color: #f8f9fa !important;
+      }
+
+      @media (max-width: 576px) {
+        footer .navbar-nav .nav-link {
+          font-size: 0.7rem;
+          padding-left: 0.75rem !important;
+          padding-right: 0.75rem !important;
+        }
+
+        footer p.text-center {
+          font-size: 0.7rem !important;
+        }
+      }
+
+      .bg-light-orange {
+        background-color: rgb(255, 238, 230); /* Light orange background */
+      }
+
+
+
+    </style>
+    <script src="https://kit.fontawesome.com/83d21c89d9.js" crossorigin="anonymous"></script>
+  </head>
+  <body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg bg-white" style="height: 13%; width: 100%; z-index: 3;">
+      <div class="container" style="position: relative; margin-left: 0;">
+          <img src="/static/images/mainLogo.jpeg" alt="logo" style="width: 15%;" class="img-fluid">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll">
+              <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarScroll">
+              <ul class="navbar-nav me-auto">
+                  <li class="nav-item"><a class="nav-link" href="{{ url_for('aboutus') }}" style="font-size: 16px; font-weight: bold;">About Us</a></li>
+                  <li class="nav-item"><a class="nav-link" href="{{ url_for('faq') }}" style="font-size: 16px; font-weight: bold;">FAQ</a></li>
+                  <li class="nav-item"><a class="nav-link" href="{{ url_for('termsAndCondition') }}" style="font-size: 16px; font-weight: bold;">Terms And Condition</a></li>
+                  <li class="nav-item"><a class="nav-link" href="{{ url_for('contact') }}" style="font-size: 16px; font-weight: bold;">Contact Us</a></li>
+              </ul>
+              {% if current_user.is_authenticated %}
+              <div id="nav-flex" style="position: relative; left: 7%;">
+                  <div style="min-width: 20px; font-size: 20px; font-family: 'Courier New', Courier, monospace;">
+                      <b>Welcome</b>  <!-- Accessing companyName from session -->
+                      <i class="fa-regular fa-user fa-lg" style="color: #74C0FC;"></i>
+                  </div>
+                  <button class="btn btn-danger" style="position: relative; left: 10%;">
+                      <a href="{{ url_for('logout') }}" style="color: white; text-decoration: none;">LOGOUT</a>
+                  </button>
+              </div>
+              {% else %}
+              <div id="nav-flex" style="position: relative; left: 7%;">
+                  <button class="btn btn-danger" style="position: relative; left: 100px;">
+                      <a href="{{ url_for('login') }}" style="color: white; text-decoration: none;">LOGIN</a>
+                  </button>
+                  <button class="btn btn-danger" style="position: relative; left: 100px;">
+                      <a href="{{ url_for('register') }}" style="color: white; text-decoration: none;">SIGN-UP</a>
+                  </button>
+              </div>
+              {% endif %}
+          </div>
+      </div>
+  </nav>
+
+
+    <!-- Hero Section -->
+    <section class="hero-section" style="margin-bottom: 0;padding-top: 100px;">
+
+          <div class="bg-light-orange" style="height: auto;">
+              <div class="container">
+                  <div class="row justify-content-between align-items-center py-3">
+                      <div class="col-md-3 col-auto">
+                           <img src="/static/images/main-down.jpg" alt="logo"  
+                          ; class="img-fluid" style="max-height: 1%;">
+                      </div>
+
+              </div>
+              </div></div>
+      <div class="hero-content" style="margin-bottom: 0;">
+        <h1 class="hero-title">Inventory management software designed for Indian businesses</h1>
+        <p class="hero-description">Manage orders. Track inventory.Manage Vendors.Make Purchase orders. One inventory management software to run all your inventory operations.</p>
+        {% if current_user.is_authenticated %}
+        <button class="btn btn-danger"><a href="{{ url_for('dashboard' ) }}" style="text-decoration: none;color: white;">Access Dashboard</a></button>
+
+        {% else %}
+        <button class="btn btn-danger"><a href="{{ url_for('register' ) }}" style="text-decoration: none;color: white;">SIGN UP IT'S FREE</a></button>
+
+        {% endif %}
+        <img src="/static/images/image4.png" alt="" class="hero-image" style="margin-bottom: 0;">
+        <div style="position: relative;top: -200px;"><a href="#" id="demo-btn"  class="img-fluid" style="text-decoration: none;"><i class="fa-solid fa-play"></i>Watch Demo</a></div>
+      </div>
+    </section>
+
+
+    <!-- Integration Section -->
+    <section class="integrate-section py-5" style="margin-top: 0;">
+        <div class="container">
+            <h2 class="text-center fw-bold mb-5" style="color: #212529; font-size: 2.6rem;">TrackIt Inventory integrates with</h2>
+            <div class="integrate-grid row justify-content-center g-4">
+                <!-- Integration Items (Bootstrap Grid within custom grid) -->
+                <div class="integrate-item col-auto">
+                    <div class="d-flex flex-column align-items-center">
+                        <div class=" rounded-4 p-3 d-flex justify-content-center align-items-center" style="width: 60px; height: 60px;">
+                            <img src="/static/images/gsuite.png" alt="Gsuite" style="max-width: 60px; min-height: 60px;">
+                        </div>
+                        <p class="mt-2 mb-0 text-center" style="font-size: 0.875rem; color: #212529;">Gsuite</p>
+                    </div>
+                </div>
+                <div class="integrate-item col-auto">
+                    <div class="d-flex flex-column align-items-center">
+                        <div class=" rounded-4 p-3 d-flex justify-content-center align-items-center" style="width: 60px; height: 60px;">
+                            <img src="/static/images/zohobooks.png" alt="TrackItBooks" style="max-width: 60px; min-height: 60px;">
+                        </div>
+                        <p class="mt-2 mb-0 text-center" style="font-size: 0.875rem; color: #212529;">TrackIt Books</p>
+                    </div>
+                </div>
+                <div class="integrate-item col-auto">
+                    <div class="d-flex flex-column align-items-center">
+                        <div class=" rounded-4 p-3 d-flex justify-content-center align-items-center" style="width: 60px; height: 60px;">
+                            <img src="/static/images/aftership.png" alt="AfterShip" style="max-width: 120px; min-height: 90px;position: relative;top: 20px;left: 20px;">
+                        </div>
+                        <p class="mt-2 mb-0 text-center" style="font-size: 0.875rem; color: #212529;">AfterShip</p>
+                    </div>
+                </div>
+                <div class="integrate-item col-auto">
+                    <div class="d-flex flex-column align-items-center">
+                        <div class=" rounded-4 p-3 d-flex justify-content-center align-items-center" style="width: 60px; height: 60px;">
+                            <img src="/static/images/zohocrm.png" alt="TrackIt CRM" style="max-width: 60px; min-height: 60px;">
+                        </div>
+                        <p class="mt-2 mb-0 text-center" style="font-size: 0.875rem; color: #212529;">TrackIt CRM</p>
+                    </div>
+                </div>
+                <div class="integrate-item col-auto">
+                    <div class="d-flex flex-column align-items-center">
+                        <div class=" rounded-4 p-3 d-flex justify-content-center align-items-center" style="width: 60px; height: 60px;">
+                            <img src="/static/images/zoho-inv1.png" alt="TrackIt Inventory" style="max-width: 60px; min-height: 60px;">
+                        </div>
+                        <p class="mt-2 mb-0 text-center" style="font-size: 0.875rem; color: #212529;">TrackIt Inventory</p>
+                    </div>
+                </div>
+                <div class="integrate-item col-auto">
+                    <div class="d-flex flex-column align-items-center">
+                        <div class=" rounded-4 p-3 d-flex justify-content-center align-items-center" style="width: 60px; height: 60px;">
+                            <img src="/static/images/shopify.png" alt="Shopify" style="max-width: 100px; min-height: 100px;position: relative;top: 20px;left: 20px;">
+                        </div>
+                        <p class="mt-2 mb-0 text-center" style="font-size: 0.875rem; color: #212529;">Shopify</p>
+                    </div>
+                </div>
+                <div class="integrate-item col-auto">
+                    <div class="d-flex flex-column align-items-center">
+                        <div class=" rounded-4 p-3 d-flex justify-content-center align-items-center" style="width: 60px; height: 60px;">
+                            <img src="/static/images/amazom.png" alt="Amazon" style="max-width: 60px; min-height: 60px;">
+                        </div>
+                        <p class="mt-2 mb-0 text-center" style="font-size: 0.875rem; color: #212529;">Amazon</p>
+                    </div>
+                </div>
+                <div class="integrate-item col-auto">
+                    <div class="d-flex flex-column align-items-center">
+                        <div class=" rounded-4 p-3 d-flex justify-content-center align-items-center" style="width: 60px; height: 60px;">
+                            <img src="/static/images/rozarpay.png" alt="Razorpay" style="max-width: 60px; min-height: 60px;">
+                        </div>
+                        <p class="mt-2 mb-0 text-center" style="font-size: 0.875rem; color: #212529;">Razorpay</p>
+                    </div>
+                </div>
+                 <div class="integrate-item col-auto">
+                    <div class="d-flex flex-column align-items-center">
+                        <div class=" rounded-4 p-3 d-flex justify-content-center align-items-center" style="width: 60px; height: 60px;">
+                            <img src="/static/images/SPS.png" alt="SPS" style="max-width: 120px; min-height: 100px;position: relative;left: 20px;top: 20px;">
+                        </div>
+                        <p class="mt-2 mb-0 text-center" style="font-size: 0.875rem; color: #212529;">SPS</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <center><img src="/static/images/pricing ke upper.jpeg" style="height: 90px; margin: 1% 0;" class="img-fluid" alt="Pricing Divider"></center>
+
+    <!-- Simple Pricing Cards Section -->
+    <section class="py-5">
+      <div class="container">
+        <h2 class="text-center mt-5" style="color: #212529; font-weight: 700; font-size: 2.5rem;">Simple pricing. <span style="color: #e53e3e;">No surprises.</span></h2>
+        <div class="row mt-4 justify-content-center">
+          <!-- Pricing Cards (Bootstrap Responsive Columns) -->
+          <div class="col-12 col-sm-6 col-md-3 mb-4">
+            <div class="card rounded-4 border-0 h-100 d-flex flex-column">
+              <div class="card-body text-center d-flex flex-column justify-content-between">
+                  <div>
+                      <h5 class="card-title" style="font-weight: 500;">Free</h5>
+                      <h2 class="card-title pricing-card-title mt-3">₹<span style="font-size: 2rem;">0</span></h2>
+                      <small class="" style="font-size: 0.8rem;">per organization / year</small><br>
+                      <small class="" style="font-size: 0.8rem;">₹0 per organization / month</small>
+                  </div>
+                  <div class="mt-4">
+                    <button type="button" class="btn btn-outline-secondary rounded-pill">GET STARTED</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-12 col-sm-6 col-md-3 mb-4">
+              <div class="card shadow-sm rounded-4 border-0 h-100 d-flex flex-column">
+                <div class="card-body text-center d-flex flex-column justify-content-between">
+                  <div>
+                      <h5 class="card-title" style="font-weight: 500;">Standard</h5>
+                      <h2 class="card-title pricing-card-title mt-3">₹<span style="font-size: 2rem;">12,999</span></h2>
+                      <small  style="font-size: 0.8rem;">per organization / year</small><br>
+                      <small  style="font-size: 0.8rem;">₹2,299 per organization / month</small>
+                  </div>
+                  <div class="mt-4">
+                    <button type="button" class="btn btn-outline-secondary rounded-pill">GET STARTED</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-12 col-sm-6 col-md-3 mb-4">
+              <div class="card shadow-sm rounded-4 border-0 h-100 d-flex flex-column">
+                <div class="card-body text-center d-flex flex-column justify-content-between">
+                  <div>
+                      <h5 class="card-title" style="font-weight: 500;">Professional</h5>
+                      <h2 class="card-title pricing-card-title mt-3">₹<span style="font-size: 2rem;">26,999</span></h2>
+                      <small  style="font-size: 0.8rem;">per organization / year</small><br>
+                      <small  style="font-size: 0.8rem;">₹5,499 per organization / month</small>
+                  </div>
+                  <div class="mt-4">
+                    <button type="button" class="btn btn-outline-secondary rounded-pill">GET STARTED</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-12 col-sm-6 col-md-3 mb-4">
+              <div class="card shadow-sm rounded-4 border-0 h-100 d-flex flex-column">
+                <div class="card-body text-center d-flex flex-column justify-content-between">
+                  <div>
+                      <h5 class="card-title" style="font-weight: 500;">Enterprise</h5>
+                      <h2 class="card-title pricing-card-title mt-3">₹<span style="font-size: 2rem;">89,999</span></h2>
+                      <small  style="font-size: 0.875rem;">per organization / year</small><br>
+                      <small  style="font-size: 0.875rem;">₹17,499 per organization / month</small>
+                  </div>
+                  <div class="mt-4">
+                    <button type="button" class="btn btn-outline-secondary rounded-pill">GET STARTED</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <center><img src="/static/images/belowsimpleprice.png" style="position: relative;width: 70%; margin: 0.1% 1% 10% 10%;left:80px ;" class="img-fluid" alt="Pricing Cards Bottom Divider"></center>
+
+      <!-- Customer Testimonials Carousel Section -->
+      <section id="customerCarouselSection" class="carousel slide bg-light py-5" data-bs-ride="carousel">
+          <div class="container">
+            <h2 class="text-center fw-bold mb-4" style="color: #192f59; font-size: 2.2rem;">Here's what a few of our Indian customers <br> <span >have to say about us</span></h2>
+            <div class="carousel-inner">
+              <!-- Testimonial Carousel Items (Bootstrap Carousel) -->
+              <div class="carousel-item active">
+                <div class="row justify-content-center mt-4">
+                  <div class="col-md-10">
+                      <div class="row align-items-stretch">
+                        <div class="col-md-6 mb-4 mb-md-0">
+                          <div class="card h-100 rounded-4 border-0" style="background-color: #e8f7f5;">
+                            <div class="card-body p-4 d-flex flex-column justify-content-between">
+                              <p class="card-text" style="color: #212529; font-size: 1rem; line-height: 1.7;">The TrackIt Inventory app has been really helpful in tracking the movement of key SKUs and the team has been very kind in providing us with solutions to our queries.</p>
+                              <div class="d-flex align-items-center mt-3">
+                                <div class="d-flex justify-content-center align-items-center rounded-circle bg-white me-3" style="width: 50px; height: 50px; border: 1px solid #ddd;">
+                                    <div class="rounded-circle bg-danger text-white fw-bold d-flex justify-content-center align-items-center" style="width: 40px; height: 40px;">HOME</div>
+                                </div>
+                                <div>
+                                  <h6 class="mb-0 fw-bold text-muted" s>TEAM OYO HOMES</h6>
+                                    <p class="mb-0 text-muted" style="font-size: 0.875rem;">OYO Homes</p>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-md-5">
+                          <div class="d-flex flex-column h-100 justify-content-between">
+                            <div>
+                              <h5 class="fw-bold mb-3" style="color: #212529;">What they like about TrackIt Inventory</h5>
+                              <blockquote class="blockquote">
+                                <p class="mb-0" style="font-size: 1.5rem; line-height: 1.4; color: #212529;">
+                                  <i class="fas fa-quote-left" style="color: #192f59; font-size: 1.2rem; margin-right: 5px;"></i>
+                                    <span class="fw-bold" style="color: #192f59;">Active support team</span>
+                                </p>
+                              </blockquote>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="carousel-item">
+                    <div class="row justify-content-center mt-4">
+                      <div class="col-md-10">
+                        <div class="row align-items-stretch">
+                          <div class="col-md-6 mb-4 mb-md-0">
+                            <div class="card h-100 rounded-4 border-0" style="background-color: #e8f7f5;">
+                              <div class="card-body p-4 d-flex flex-column justify-content-between">
+                                <p class="card-text" style="color: #212529; font-size: 1rem; line-height: 1.7;">We manage all our inventory, sales, and purchases using TrackIt Inventory and TrackIt Books. They are easy to learn, easy to apply, and the support team is very helpful. We like TrackIt very much!.</p>
+                                <div class="d-flex align-items-center mt-3">
+                                  <div class="d-flex justify-content-center align-items-center rounded-circle bg-white me-3" style="width: 50px; height: 50px; border: 1px solid #ddd;">
+                                    <div class="rounded-circle bg-success text-white fw-bold d-flex justify-content-center align-items-center" style="width: 40px; height: 40px;">AV</div>
+                                    </div>
+                                    <div>
+                                        <h6 class="mb-0 fw-bold text-muted">Ashish Verma</h6>
+                                        <p class="mb-0 text-muted" style="font-size: 0.875rem;">Professional</p>
+                                    </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-md-5">
+                            <div class="d-flex flex-column h-100 justify-content-between">
+                              <div>
+                                <h5 class="fw-bold mb-3" style="color: #212529;">Quick product updates</h5>
+                                <blockquote class="blockquote">
+                                  <p class="mb-0" style="font-size: 1.5rem; line-height: 1.4; color: #212529;">
+                                    <i class="fas fa-quote-left" style="color: #192f59; font-size: 1.2rem; margin-right: 5px;"></i>
+                                      <span class="fw-bold" style="color: #192f59;">Ease of Use</span>
+                                    </p>
+                                </blockquote>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Add more carousel-item divs here for each testimonial -->
+
+                </div>
+
+                <!-- Carousel Controls -->
+                <button class="carousel-control-prev" type="button" data-bs-target="#customerCarouselSection" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                  </button>
+                  <button class="carousel-control-next" type="button" data-bs-target="#customerCarouselSection" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                  </button>
+
+                  <!-- Carousel Indicators (dots at the bottom) -->
+                  <div class="carousel-indicators mt-4">
+                    <button type="button" data-bs-target="#customerCarouselSection" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                    <button type="button" data-bs-target="#customerCarouselSection" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                    <!-- Add more buttons for each carousel item -->
+                  </div>
+
+                </div>
+              </div>
+              <img src="/static/images/below-carousel.jpeg" style="height: 25%px;position: relative;left: -50px;" class="img-fluid" alt="Carousel Bottom Divider">
+
+    <!-- Shipping Carriers Section -->
+    <section class="py-5 bg-white">
+        <div class="container">
+            <h2 class="text-center fw-bold mb-4" style="color: #002855; font-size: 2rem;">We have partnered with the best shipping carriers</h2>
+            <div class="row justify-content-center align-items-center g-4">
+                <!-- Shipping Carrier Images with Animation Classes -->
+                <div class="col-auto">
+                    <img src="/static/images/aramax.png" alt="Aramex" style="opacity: 0.7; max-height: 80px;" class="slide-in-left">
+                </div>
+                <div class="col-auto">
+                    <img src="/static/images/DHL.png" alt="DHL" style="opacity: 0.7; max-height: 100px;position: relative;top: 20px;">
+                </div>
+                <div class="col-auto">
+                    <img src="/static/images/dpd.png" alt="DPD" style="opacity: 0.7; max-height: 80px;">
+                </div>
+                <div class="col-auto">
+                    <img src="/static/images/ups.png" alt="UPS" style="opacity: 0.7; max-height: 80px;" class="slide-in-right">
+                </div>
+                <div class="col-auto">
+                    <img src="/static/images/FedEx.png" alt="FedEx" style="opacity: 0.7; max-height: 120px;position: relative;top: 30px;" class="slide-in-right">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Red Banner Section -->
+    <section class="py-5" style="background-color: #D42331;">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-8 text-center text-md-start">
+                    <h3 class="text-white fw-bold" style="font-size: 2rem;">Hello, Namaste, Vanakkam <span style="font-size: 2rem;">🙏</span></h3>
+                    <p class="text-white" style="font-size: 1.1rem;">We will be happy to have you on board.</p>
+                </div>
+                <div class="col-md-4 text-center text-md-end">
+                    <button type="button" class="btn btn-warning text-dark rounded-pill px-4 py-2 fw-bold">SIGN UP FOR FREE</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Inventory Software: Things to Consider Cards Section -->
+    <section class="py-5">
+      <div class="container">
+        <h1 class="main-title text-dark">Inventory Software: Things to Consider</h1>
+        <p class="subtitle">Different inventory tracking systems offer different features. These are some things to look for in choosing the right online inventory management system.</p>
+
+        <div class="row justify-content-center">
+          <!-- "Things to Consider" Cards -->
+          <div class="col-md-3 mb-3">
+            <div class="card box footer-card" id="price-box" style="background-color:rgb(255, 238, 230);">
+              <div class="card-body">
+                <h5 class="card-title">Price</h5>
+                <p class="card-text">Watch out for high up-front costs or high on-going fees. Good products offer free options to start which reduces your risk and allows you to grow with them. When it comes to SaaS based inventory solutions, higher price does not translate to higher quality.</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3 mb-3">
+            <div class="card box footer-card" id="flexibility-box" style="background-color:rgb(255, 238, 230);">
+              <div class="card-body">
+                <h5 class="card-title">Flexibility</h5>
+                <p class="card-text">Whether you're an individual, business, non-profit, retail store, or warehouse - you'll need flexibility in your inventory system. And the more complex the software, the less flexible it will be. Look for software that can be adapted to your needs, and not the other way around.</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3 mb-3">
+            <div class="card box footer-card" id="simplicity-box" style="background-color:rgb(255, 238, 230);">
+              <div class="card-body">
+                <h5 class="card-title">Simplicity</h5>
+                <p class="card-text">Ideal inventory tracking software is as simple as can be. This flattens the learning curve and reduces errors for you and your staff. Watch out for too many features, too many options, and too much complexity. Chances are you'll never use the advanced features of most systems.</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3 mb-3">
+            <div class="card box footer-card" id="features-box" style="background-color:rgb(255, 238, 230);">
+              <div class="card-body">
+                <h5 class="card-title">Features</h5>
+                <p class="card-text">It's inventory we're doing here. That means setting up items, managing transactions, moving things around, and generating reports. You need these basic inventory features for streamlining your operation. And if you're tracking costs you'll need AVERAGE, LIFO or FIFO costing.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer class="bg-light py-3 border-top">
+        <div class="container">
+            <p class="text-center mt-2" style="font-size: 0.8rem; color: #777;">© 2025, TrackIt Corporation Pvt. Ltd. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+          // "Things to Consider" Cards Animation
+          const boxes = document.querySelectorAll('.box');
+          boxes.forEach((box, index) => {
+              setTimeout(() => {
+                  box.classList.add('animated');
+              }, 300 * (index + 1));
+          });
+
+          // Shipping Carriers Images Animation
+          const imagesLeft = document.querySelectorAll('.slide-in-left');
+          const imagesRight = document.querySelectorAll('.slide-in-right');
+
+          imagesLeft.forEach((img, index) => {
+              setTimeout(() => {
+                  img.classList.add('animated');
+              }, 200 * (index + 1)); // Stagger animation for left images
+          });
+
+          imagesRight.forEach((img, index) => {
+              setTimeout(() => {
+                  img.classList.add('animated');
+              }, 200 * (index + 1) + 400); // Stagger animation for right images, starting after left
+          });
+      });
+    </script>
+  </body>
+</html>

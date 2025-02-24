@@ -1,0 +1,104 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container-fluid table-responsive">
+    <h1>Purchase Orders</h1>
+    <a href="#" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#addPurchaseOrderModal">New Purchase Order</a>
+    <table class="table table-striped table-hover table-bordered" width="100%">
+        <thead>
+            <tr>
+                <th>Purchase Order No.</th>
+                <th>Reference No.</th>
+                <th>Vendor Name</th>
+                <th>Status</th>
+                <th>Total Amount</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for order in purchase_orders %}
+                <tr>
+                    <td>{{ order.purchase_order_no }}</td>  <!-- Assuming 'id' is the Purchase Order No. -->
+                    <td>{{ order.reference_no }}</td>  <!-- Add this field in your PurchaseOrder model -->
+                    <td>{{ order.vendor.company_name }}</td>  <!-- Assuming vendor relationship is set up -->
+                    <td>{{ order.status }}</td>
+                    <td>{{ order.amount }}</td>
+                    <td>
+                        <a href="{{ url_for('edit_purchase_order', order_id=order.id) }}" class="btn btn-sm btn-secondary"><i class="bi bi-pencil"></i></a> 
+                       
+
+                        <div class="modal fade" id="deleteOrderModal{{ order.id }}" tabindex="-1" aria-labelledby="deleteOrderModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="deleteOrderModalLabel">Confirm Deletion</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        Are you sure you want to delete this purchase order?
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                        <form method="POST" action="{{ url_for('delete_purchase_order', order_id=order.id) }}">
+                                            <button type="submit" class="btn btn-danger">Delete</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- Add Purchase Order Modal -->
+    <div class="modal fade" id="addPurchaseOrderModal" tabindex="-1" aria-labelledby="addPurchaseOrderModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addPurchaseOrderModalLabel">Add New Purchase Order</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form method="POST" action="{{ url_for('add_purchase_order') }}">
+                        <div class="mb-3">
+                            <label for="vendor_id" class="form-label">Vendor</label>
+                            <select class="form-select" id="vendor_id" name="vendor_id" required>
+                                <option value="">Select Vendor</option>
+                                {% for vendor in vendors %}
+                                    <option value="{{ vendor.id }}">{{ vendor.company_name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="reference_no" class="form-label">Reference No.</label>
+                            <input type="text" class="form-control" id="reference_no" name="reference_no" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="amount" class="form-label">Total Amount</label>
+                            <input type="number" class="form-control" id="amount" name="amount" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="status" class="form-label">Status</label>
+                            <select class="form-select" id="status" name="status" required>
+                                <option value="">Select Status</option>
+                                <option value="Pending">Pending</option>
+                                <option value="Approved">Approved</option>
+                                <option value="Received">Received</option>
+                                <option value="Paid">Paid</option>
+                            </select>
+                        </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>
+    
+{% endblock %}

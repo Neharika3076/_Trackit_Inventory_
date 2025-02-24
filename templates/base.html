@@ -1,0 +1,262 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Customer Table</title>
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        /* Custom Styles */
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+      .sidebar {
+            background-color: #21263c;
+            color: #ffffff;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+      .sidebar h2 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+
+      .sidebar ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+      .sidebar ul li {
+            margin: 10px 0;
+        }
+
+      .sidebar ul ul {
+            margin-left: 20px;
+        }
+
+      .table-container {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+      .new-button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 5px;
+        }
+
+      .new-button:hover {
+            background-color: #0056b3;
+        }
+
+      .no-gap.col-md-2,
+      .no-gap.col-md-10 {
+            padding: 0;
+        }
+
+      .topbar {
+            width: 100%;
+            height: 60px;
+            background: #f8f9fa;
+            border-bottom: 1px solid #ddd;
+            padding: 0 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+      .content {
+            /*margin-left: 250px;*/
+            padding: 15px;
+            transition: all 0.3s;
+        }
+
+      .content.collapsed {
+            margin-left: 70px;
+        }
+
+      .toggle-sidebar-btn {
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+      .sidebar a {
+            color: #fff;
+            text-decoration: none;
+            padding: 10px 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+      .topbar.user-menu {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+      .topbar.user-menu img {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+        }
+        
+        .kanban-column {
+            min-width: 380px;
+            max-width: 450px;
+            padding: 10px;
+        }
+        .kanban-card {
+            background: #fff;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 10px;
+        }
+        .kanban-header {
+            padding: 10px;
+            border-radius: 5px;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .not-shipped { background: #d9f0ff; }
+        .shipped { background: #fff8c4; }
+        .delivered { background: #d4edda; }
+    </style>
+</head>
+<body>
+    <div class="container-fluid ">
+        <div class="row no-gap">
+            <div class="col-md-2 sidebar">
+                <a href="#" style="font-size: 25px; background-color: #181c30;" class="navbar-brand mb-3 pt-8 px-5">
+                    <i class="bi bi-box "></i>
+                    <span class="sidebar-text">Inventory</span>
+                </a>
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a href="{{ url_for('dashboard' ) }}" class="nav-link" data-section="home">
+                            <i class="bi bi-house"></i>
+                            <span class="sidebar-text">Home</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a
+                            class="nav-link dropdown-toggle"
+                            href="#"
+                            id="inventoryDropdown"
+                            role="button"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#inventoryMenu"
+                            aria-expanded="false"
+                            aria-controls="inventoryMenu"
+                        >
+                            <i class="bi bi-box-seam"></i>
+                            <span class="sidebar-text">Inventory</span>
+                        </a>
+                        <div class="collapse" id="inventoryMenu">
+                            <ul class="list-unstyled ms-3">
+                                <li><a class="dropdown-item" href="{{ url_for('items' ) }}">Items</a></li>
+                                <li><a class="dropdown-item" href="{{ url_for('group_items' ) }}">Item Groups</a></li>
+                                <li><a class="dropdown-item" href="{{ url_for('inventory_adjustments' ) }}">Item Adjustments</a></li>
+                            </ul>
+                        </div>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a
+                            class="nav-link dropdown-toggle"
+                            href="#"
+                            id="salesDropdown"
+                            role="button"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#salesMenu"
+                            aria-expanded="false"
+                            aria-controls="salesMenu"
+                        >
+                            <i class="bi bi-cart"></i>
+                            <span class="sidebar-text">Sales</span>
+                        </a>
+                        <div class="collapse" id="salesMenu">
+                            <ul class="list-unstyled ms-3">
+                                <li><a class="dropdown-item" href="{{ url_for('customers' ) }}">Customers</a></li>
+                                <li><a class="dropdown-item" href="{{ url_for('index' ) }}">Sales Orders</a></li>
+                                <li><a class="dropdown-item" href="{{ url_for('packages' ) }}">Packages</a></li>
+                            </ul>
+                        </div>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a
+                            class="nav-link dropdown-toggle"
+                            href="#"
+                            id="productsDropdown"
+                            role="button"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#productsMenu"
+                            aria-expanded="false"
+                            aria-controls="productsMenu"
+                        >
+                            <i class="bi bi-receipt"></i>
+                            <span class="sidebar-text">Purchases</span>
+                        </a>
+                        <div class="collapse" id="productsMenu">
+                            <ul class="list-unstyled ms-3">
+                                <li><a class="dropdown-item" href="{{ url_for('vendors' ) }}">Vendors</a></li>
+                                <li><a class="dropdown-item" href="{{ url_for('purchase_orders') }}">Purchase Orders</a></li>
+                                <li><a class="dropdown-item" href="{{ url_for('purchase_receives') }}">Purchase Receives</a></li>
+                             
+                            </ul>
+                        </div>
+                    </li>
+
+                    
+              
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ url_for('logout' ) }}" class="nav-link" data-section="logout">
+                            <i class="bi bi-folder"></i>
+                            <span class="sidebar-text">Logout</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-md-10 mx-0 ">
+                <div class="topbar mb-3 ">
+                    <button id="toggleSidebar" class="btn btn-light toggle-sidebar-btn">
+                        <i class="bi bi-list"></i>
+                    </button>
+           
+                    <div class="user-menu">
+                        <i class="fa-regular fa-user fa-lg" style="color: #74C0FC;"></i>
+                        <span class="text-muted">Welcome User</span>
+                        
+                    </div>
+                </div>
+
+                <div class="content container-fluid ">
+                    {% block content %}
+                    {% endblock %}
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html

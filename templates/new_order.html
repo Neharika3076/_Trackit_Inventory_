@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <h2 class="mt-4">Create New Sales Order</h2>
+    <form method="POST">
+        {% if order %}
+            <input type="hidden" name="order_id" value="{{ order.id }}">
+        {% endif %}
+        <div class="form-group">
+            <label>Sales Order No:</label>
+            <input type="text" class="form-control" name="sales_order_no" value="{{ sales_order_no }}" readonly>
+        </div>
+        <div class="form-group">
+            <label for="customer_id">Select Customer:</label>
+            <select id="customer_id" name="customer_id" required>
+                <option value="" disabled selected>Choose a customer</option>
+                {% for customer in customers %}
+                    <option value="{{ customer.roll_no }}" {% if order and order.customer_id == customer.roll_no %}selected{% endif %}>{{ customer.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Reference No:</label>
+            <input type="text" class="form-control" name="reference_no" value="{{ order.reference_no if order else '' }}">
+        </div>
+        <div class="form-group">
+            <label>Order Status:</label>
+            <select class="form-control" name="order_status">
+                <option {% if order and order.order_status == 'Draft' %}selected{% endif %}>Draft</option>
+                <option {% if order and order.order_status == 'To Be Approved' %}selected{% endif %}>To Be Approved</option>
+                <option {% if order and order.order_status == 'Confirmed' %}selected{% endif %}>Confirmed</option>
+                <option {% if order and order.order_status == 'Canceled' %}selected{% endif %}>Canceled</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Shipment Status:</label>
+            <select class="form-control" name="shipment_status">
+                <option {% if order and order.shipment_status == 'Not Shipped' %}selected{% endif %}>Not Shipped</option>
+                <option {% if order and order.shipment_status == 'Shipped' %}selected{% endif %}>Shipped</option>
+                <option {% if order and order.shipment_status == 'Delivered' %}selected{% endif %}>Delivered</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Total Amount:</label>
+            <input type="number" class="form-control" name="total_amount" step="0.01" value="{{ order.total_amount if order else '' }}" required>
+        </div>
+        <div class="form-group">
+            <label>Amount Received:</label>
+            <input type="number" class="form-control" name="amount_received" step="0.01" value="{{ order.amount_received if order else '' }}" required>
+        </div>
+        <button type="submit" class="btn btn-success">{{ 'Update Order' if order else 'Create Order' }}</button>
+    </form>
+</div>
+{% endblock %}
